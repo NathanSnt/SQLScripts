@@ -42,3 +42,28 @@ INSERT INTO tb_produto(PRODUTO, NOME, EMBALAGEM, TAMANHO, SABOR, PRECO_LISTA) VA
 -- colocar PRODUTO com primary key ou destivar secure-update(meu caso)
 UPDATE tb_produto SET EMBALAGEM = 'Lata', PRECO_LISTA = 2.46 WHERE PRODUTO = '544931';
 -- update tb_produto set PRECO_LISTA = 19.51 where PRODUTO = '1004327';
+
+UPDATE tb_produto SET EMBALAGEM = 'Garrafa' WHERE PRODUTO = '1078680';
+
+-- Coloca a coluna PRODUTO como sendo chave primária.
+ALTER TABLE tb_produto ADD PRIMARY KEY (PRODUTO);
+
+SELECT * FROM tb_cliente;
+
+ALTER TABLE tb_cliente ADD COLUMN (DATA_NASCIMENTO date);
+
+INSERT INTO tb_cliente(CPF, NOME, ENDERECO1, ENDERECO2, BAIRRO, CIDADE, ESTADO, CEP, IDADE, SEXO, LIMITE_CREDITO, VOLUME_COMPRA, PRIMEIRA_COMPRA, DATA_NASCIMENTO) 
+VALUES('00388934505', 'João da Silva', 'Rua projeta A número 10', '', 'Vila Roman', 'Caratinga', 'AM', '06836001', 30, 'M', 1000.000, 2000, 0, '1989-10-05');
+
+INSERT INTO tb_cliente(CPF, NOME, ENDERECO1, ENDERECO2, BAIRRO, CIDADE, ESTADO, CEP, IDADE, SEXO, LIMITE_CREDITO, VOLUME_COMPRA, PRIMEIRA_COMPRA, DATA_NASCIMENTO)
+VALUES('12312312312', 'Monteiro Lobato', 'Rua 23 de maio número 35', '', 'Santa ifigênia', 'São Paulo', 'SP', '08502900', 65, 'M', 3000, 2600, 1, '1882-04-18');
+
+INSERT INTO tb_cliente(CPF, NOME, ENDERECO1, ENDERECO2, BAIRRO, CIDADE, ESTADO, CEP, IDADE, SEXO, LIMITE_CREDITO, VOLUME_COMPRA, PRIMEIRA_COMPRA, DATA_NASCIMENTO) 
+VALUES('32132132132', 'Pedro Alvares Cabral', 'Rua Camilio do Abrão número 43', '', 'Largo São Francisco', 'São Paulo', 'SP', '07459200', 78, 'M', 6000, 3500, 0, '1467-09-26');
+/*
+INSERT INTO tb_cliente(CPF, NOME, ENDERECO1, BAIRRO, CIDADE, ESTADO, CEP, IDADE, SEXO, LIMITE_CREDITO, VOLUME_COMPRA, PRIMEIRA_COMPRA, DATA_NASCIMENTO) 
+VALUES('00388934505', 'João da Silva', 'Rua projeta A número 10', 'Vila Roman', 'Caratinga', 'AM', '06836001', 30, 'M', 1000.000, 2000, 0, '1989-10-05');
+
+DROP TABLE tb_cliente;
+*/
+
