@@ -83,3 +83,21 @@ INSERT INTO tbproduto (PRODUTO, NOME, EMBALAGEM, TAMANHO, SABOR, PRECO_LISTA) VA
 INSERT INTO tbproduto (PRODUTO, NOME, EMBALAGEM, TAMANHO, SABOR, PRECO_LISTA) VALUES ('1013793','Videira do Campo - 2 Litros - Cereja/Maça','PET','2 Litros','Cereja/Maça',24.01);
 INSERT INTO tbproduto (PRODUTO, NOME, EMBALAGEM, TAMANHO, SABOR, PRECO_LISTA) VALUES ('1096818','Linha Refrescante - 700 ml - Manga','Garrafa','700 ml','Manga',7.7105);
 INSERT INTO tbproduto (PRODUTO, NOME, EMBALAGEM, TAMANHO, SABOR, PRECO_LISTA) VALUES ('1022450','Festival de Sabores - 2 Litros - Açai','PET','2 Litros','Açai',38.012);
+
+
+SELECT * FROM tbproduto;
+SELECT * FROM tbcliente;
+
+-- LIMIT limita a quantidade de registros.
+-- ALIAS ou apelido
+SELECT CPF as Documento, NOME as NomeCompleto, ESTADO as Estado FROM tbcliente WHERE PRIMEIRA_COMPRA = 1 LIMIT 5;
+
+UPDATE tbproduto SET SABOR = 'Cítrico' WHERE SABOR = 'Limão';
+
+SELECT * FROM tbcliente WHERE IDADE >= 25;
+SELECT * FROM tbcliente WHERE 20 <= IDADE AND IDADE < 30;
+SELECT * FROM tbcliente WHERE IDADE BETWEEN 10 AND 20;
+
+SELECT * FROM tbcliente WHERE YEAR(DATA_NASCIMENTO) = 2000;
+SELECT * FROM tbcliente WHERE MONTH(DATA_NASCIMENTO) = 09;
+SELECT * FROM tbcliente WHERE DAY(DATA_NASCIMENTO) = 18;

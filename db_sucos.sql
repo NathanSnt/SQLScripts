@@ -66,4 +66,3 @@ VALUES('00388934505', 'João da Silva', 'Rua projeta A número 10', 'Vila Roman'
 
 DROP TABLE tb_cliente;
 */
-
