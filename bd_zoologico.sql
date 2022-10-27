@@ -36,10 +36,7 @@ SELECT procedencia, tipo, nome, idade as 'Tempo de Vida' FROM  animais;
 
 ALTER TABLE animais ADD COLUMN (venda decimal(10, 2));
 
-UPDATE animais SET venda = 330.00 WHERE valor = 300.00;
-UPDATE animais SET venda = 550.00 WHERE valor = 500.00;
-UPDATE animais SET venda = 770.00 WHERE valor = 700.00;
-UPDATE animais SET venda = 110.00 WHERE valor = 100.00;
+UPDATE animais SET venda = valor + valor * 0.1;
 
 SELECT tipo, nome, idade, valor AS 'Valor Original', venda AS 'Valor de Venda' FROM animais;
 
