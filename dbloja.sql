@@ -50,3 +50,7 @@ VALUES('jose.marahnao', '43214321');
 -- Visualizando registros
 SELECT * FROM tbFuncionarios;
 SELECT * FROM tbUsuarios;
+
+-- Alterando os registros
+UPDATE tbUsuarios SET senha = '12341243' WHERE codUsu = 1;
+SELECT * FROM tbUsuarios;
