@@ -4,7 +4,7 @@ show databases; -- Lista os bancos de dados existentes
 show tables; -- Lista todas as tabelas de um banco de dados
 use <nome do banco de dados>; -- seleciona um banco de dados
 desc <table>; -- descreve os campos de uma tabela
-source <endereço>; executa um escript
+source <endereço>; executa um script
 */
 
 -- Apagar banco de dados
