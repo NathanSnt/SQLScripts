@@ -45,3 +45,23 @@ VALUES ( 10,'MOUSE', 'INFORMATICA', 400, 60.00 );
 
 DESC produtos;
 SELECT * FROM produtos;
+
+
+-- Aumente em 12% o valor dos produtos cujos nomes iniciem com a letra 'F'
+
+UPDATE produtos SET valor = valor * 1.12 WHERE nome LIKE 'F%';
+
+-- Aumentar em 50 unidades todos os produtos cujo valor seja maior que 400 e inferior a 600
+
+UPDATE produtos SET quantidade = quantidade + 50 WHERE valor BETWEEN 400 and 600;
+
+-- Aplicar um desconto de 50% (*0.5) em todos os produtos que as unidades de estoque sejam maiores que 300
+
+
+
+-- Exiba o produto de CODIGO = 4
+
+-- Exibir todos os produtos que não tenham a letra 'Y'
+
+-- Exibir todos os produtos que se iniciem com nome 'MO' e tenham como tipo as letras 'MA'
+
