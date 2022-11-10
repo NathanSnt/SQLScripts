@@ -289,59 +289,115 @@ INSERT INTO TITULOS_PEDIDO VALUES
 (9, 2, 3, 15.00);
 -- (10, 7, 2, 15.00);
 
+-- INNER JOIN
+SELECT NOME_CLI, END_CLI, CID.NOME_CID
+FROM CLIENTES AS CLI
+INNER JOIN CIDADES AS CID 
+ON CID.COD_CID = CLI.COD_CID;
+
+-- CHEGA NO MESMO RESULTADO COM:
+SELECT NOME_CLI, END_CLI, CID.NOME_CID
+FROM CLIENTES AS CLI, CIDADES AS CID
+WHERE CID.COD_CID = CLI.COD_CID;
+
+-- LEFT JOIN
+/*
+Obtem não apenas os dados relacionados de duas tabelas, mas também os dados não relacionados encontrados
+na tabela à esquerda da clásula JOIN.
+Caso não existam dados relacinados entre as tabelas à esquerda e à direita do JOIN, os valores
+resultantes de todas as colunas da lista de seleção à direita serão nulos.
+*/
+SELECT CLIENTES.NOME_CLI, CONJUGE.NOME_CONJ
+FROM CLIENTES
+LEFT JOIN CONJUGE
+ON CLIENTES.COD_CLI = CONJUGE.COD_CLI;
+
+-- RIGHT JOIN
+/*
+Ao contrário do LEFT JOIN, a cláusula RIGHT JOIN retorna todos os dados encontrados na tabela à direito de JOIN. 
+Caso não existam dados associados entre as tabelas, serão retornados valores nulos.
+*/
+SELECT CLIENTES.NOME_CLI, CONJUGE.NOME_CONJ
+FROM CLIENTES
+RIGHT JOIN CONJUGE
+ON CLIENTES.COD_CLI = CONJUGE.COD_CLI;
+
+-- ASSOCIANDO MAIS DE DUAS TABELAS
+SELECT CLI.NOME_CLI AS NOME, CONJ.NOME_CONJ AS CONJUGE, CID.NOME_CID AS CIDADE
+FROM CLIENTES AS CLI
+INNER JOIN CONJUGE AS CONJ 
+ON CONJ.COD_CLI = CLI.COD_CLI
+INNER JOIN CIDADES AS CID 
+ON CID.COD_CID = CLI.COD_CID;
+
+-- FULL OUTER JOIN (acho que não funciona no mysql)
+/*
+Todas as linha de dados da tabela à esquerda de JOIN e da tabela à direita serão retornadas pela cláusula FULL OUTER JOIN.
+Caso uma linha de dados não esteja associada a qualquer linha da outra tabela, os valores da colunas da lista de seleção 
+serão nulos. Caso contrário, os valores obtidos serão baseados nas tabelas utilizadas como referência.
+*/
+
+SELECT CLI.NOME_CLI AS NOME, CONJ.NOME_CONJ AS CONJUGE
+FROM CLIENTES AS CLI
+FULL OUTER JOIN CONJUGE AS CONJ 
+ON CONJ.COD_CLI = CLI.COD_CLI;
+
+-- para conseguir um mesmo resultado do código acima, usei o right join e o left join através do union para unir os resultados.
+
+SELECT CLI.NOME_CLI AS NOME, CONJ.NOME_CONJ AS CONJUGE
+FROM CLIENTES AS CLI
+LEFT OUTER JOIN CONJUGE AS CONJ
+ON CONJ.COD_CLI = CLI.COD_CLI
+
+UNION
+
+SELECT CLI.NOME_CLI AS NOME, CONJ.NOME_CONJ AS CONJUGE
+FROM CLIENTES AS CLI
+RIGHT OUTER JOIN CONJUGE AS CONJ
+ON CONJ.COD_CLI = CLI.COD_CLI;
 
 
+-- CROSS JOIN
 
+/*
+Todos os resultados da tabela à esquerda de JOIN serão cruzados com os dados da tabela à direita de JOIN
+*/
 
+SELECT CLI.NOME_CLI AS NOME, CONJ.NOME_CONJ AS CONJUGE 
+FROM CLIENTES AS CLI
+CROSS JOIN CONJUGE AS CONJ ORDER BY CLI.NOME_CLI;
 
+-- CRIANDO OUTRO DB
 
+CREATE DATABASE IDIOMAS;
+USE IDIOMAS;
 
+CREATE TABLE ALUNOS(
+COD_ALUNO INT NOT NULL,
+NOME VARCHAR(50) NOT NULL,
+COD_CURSO INT,
 
+CONSTRAINT PK_ALUNOS_COD_ALUNO PRIMARY KEY (COD_ALUNO),
+CONSTRAINT FK_ALUNOS_COD_CURSO FOREIGN KEY (COD_CURSO) REFERENCES CURSOS(COD_CURSO)
+);
 
+CREATE TABLE CURSOS (
+COD_CURSO INT,
+NOME VARCHAR(50) NOT NULL,
 
+CONSTRAINT PK_CURSOS_COD_CURSO PRIMARY KEY (COD_CURSO)
+);
 
+INSERT INTO ALUNOS VALUES
+(1, 'JOAQUIM MANUEL', 1),
+(2, 'MARIA MADALENA', 1),
+(3, 'CARLITOS AMARAL', 3),
+(4, 'JOSÉ DA BRAGA E TINO', 3);
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+INSERT INTO CURSOS VALUES
+(1, 'INGLES'),
+(2, 'ESPANHOL'),
+(3, 'ALEMAO');
 
 
 
