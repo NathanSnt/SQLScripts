@@ -48,26 +48,29 @@ SELECT * FROM produtos;
 
 
 -- Aumente em 12% o valor dos produtos cujos nomes iniciem com a letra 'F'
-
 UPDATE produtos SET valor = valor * 1.12 WHERE nome LIKE 'F%';
 
--- Aumentar em 50 unidades todos os produtos cujo valor seja maior que 400 e inferior a 600
 
+-- Aumentar em 50 unidades todos os produtos cujo valor seja maior que 400 e inferior a 600
 UPDATE produtos SET quantidade = quantidade + 50 WHERE valor > 400 and valor < 600;
 
--- Aplicar um desconto de 50% (*0.5) em todos os produtos que as unidades de estoque sejam maiores que 300
 
+-- Aplicar um desconto de 50% (*0.5) em todos os produtos que as unidades de estoque sejam maiores que 300
 UPDATE produtos SET valor = valor * 0.5 WHERE quantidade > 300;
 
--- Exiba o produto de CODIGO = 4
 
+-- Exiba o produto de CODIGO = 4
 SELECT * FROM produtos WHERE codigo = 4;
 
--- Exibir todos os produtos que não tenham a letra 'Y'
 
+-- Exibir todos os produtos que não tenham a letra 'Y'
 SELECT * FROM produtos WHERE nome NOT LIKE '%Y%';
 
--- Exibir todos os produtos que se iniciem com nome 'MO' e tenham como tipo as letras 'MA'
 
+-- Exibir todos os produtos que se iniciem com nome 'MO' e tenham como tipo as letras 'MA'
 SELECT * FROM produtos WHERE nome LIKE 'MO%' AND tipo LIKE '%MA%';
+
+
+-- Exibir os 5 produtos mais caros
+SELECT * FROM PRODUTOS ORDER BY VALOR DESC LIMIT 5;
 
