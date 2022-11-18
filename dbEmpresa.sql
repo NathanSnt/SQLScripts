@@ -38,7 +38,7 @@ QUANTIDADE INT DEFAULT 0 CHECK(QUANTIDADE >= 0),
 VALOR DECIMAL(9,2) CHECK(VALOR >= 0),
 COD_FORN INT NOT NULL,
 PRIMARY KEY(COD_PROD),
-FOREIGN KEY(COD_PROD) REFERENCES TB_FORNECEDORES(COD_FORN)
+FOREIGN KEY(COD_FORN) REFERENCES TB_FORNECEDORES(COD_FORN)
 );
 
 CREATE TABLE TB_CLIENTES(
@@ -89,17 +89,31 @@ INSERT INTO TB_FORNECEDORES(NOME, CNPJ, INSCR_EST, EMAIL, TELEFONE) VALUES
 ('Fazenda Barra Grande', '34.567/0001-34', '678.678.687-110', 'contato@fazendabarragrande.com', '91523-7834');
 
 INSERT INTO TB_PRODUTOS(DESCRICAO, QUANTIDADE, VALOR, COD_FORN) VALUES
-('Morango', 20, 35.00, 3),
-('Laranja', 6, 9.90, 1),
-('Banana', 12, 10.50, 2);
+('Morango', 20, 0.80, 3),
+('Laranja', 16, 3.90, 1),
+('Mexirica', 25, 2.90, 3),
+('Pera', 55, 3.90, 2),
+('Uva', 90, 0.90, 2),
+('Abacaxi', 15, 4.90, 3),
+('Banana', 12, 1.50, 2);
 
 INSERT INTO TB_CLIENTES(NOME, EMAIL, CPF, TEL) VALUES
 ('Joaquim Barbosa Gusmães', 'joaquim.bgusmaes@gmail.com', '848.484.484-44', '91111-1111'),
+('Pablo Emilio Escobar Gaviria', 'pablo.dacoca@hotmail.com', '151.232.444-21', '93333-3333'),
 ('Paulo Américo da Silva', 'paulo.asilva@gmail.com', '233.444.123-44', '92222-2222');
 
 INSERT INTO TB_VENDAS(COD_PROD, COD_CLI, COD_USU, DATA_VENDA, HORA_VENDA, QUANTIDADE) VALUES
 (1, 2, 1, '2022/11/17', '13:27:22', 5),
 (3, 1, 3, '2022/11/17', '15:20:54', 20),
+(4, 1, 3, '2022/11/17', '15:20:54', 27),
+(5, 1, 3, '2022/11/17', '15:20:54', 54),
+(2, 1, 3, '2022/11/17', '15:20:54', 34),
+(6, 2, 2, '2022/11/17', '15:20:54', 9),
+(5, 2, 1, '2022/11/17', '15:20:54', 11),
+(7, 2, 1, '2022/11/17', '15:20:54', 21),
+(7, 3, 2, '2022/11/17', '15:20:54', 41),
+(4, 3, 2, '2022/11/17', '15:20:54', 33),
+(3, 3, 1, '2022/11/17', '15:20:54', 25),
 (2, 2, 2, '2022/11/17', '16:33:21', 12);
 
 /*
@@ -126,3 +140,51 @@ INNER JOIN TB_CLIENTES AS CLI ON VND.COD_CLI = CLI.COD_CLI
 INNER JOIN TB_USUARIOS AS USU ON USU.COD_USU = VND.COD_USU
 INNER JOIN TB_FUNCIONARIOS AS FUNC ON USU.COD_FUNC = FUNC.COD_FUNC
 ORDER BY VND.QUANTIDADE * PROD.VALOR DESC;
+
+/*
+select prod.descricao, cli.nome, usu.nome from tbVendas as vend
+inner join tbProdutos as prod on vend.codProd = prod.codProd
+inner join tbClientes as cli on vend.codCli = cli.codCli
+inner join tbUsuarios as usu on vend.codusu = usu.codusu;
+
+select prod.descricao as 'Nome do Produto',
+cli.nome as 'Nome do Cliente', forn.nome as 'Nome do Fornecedor' 
+from tbVendas as vend
+inner join tbProdutos as prod on vend.codProd = prod.codProd 
+inner join tbClientes as cli on cli.codCli = vend.codCli
+inner join tbFornecedores as forn on prod.codForn = forn.codForn
+where vend.codProd = 3;
+
+*/
+/*
+Qual o nome do funcionário que vendeu o produto morango e quantidade da venda
+e qual é o fornecedor desse produto.
+Pergunta realizada para tabela de vendas
+*/
+SELECT PROD.DESCRICAO AS 'PRODUTO', FUNC.NOME AS 'VENDEDOR', 
+VEND.QUANTIDADE AS 'QUANTIDADE', FORN.NOME AS 'FORNECEDOR'
+FROM TB_VENDAS AS VEND
+INNER JOIN TB_USUARIOS AS USU ON VEND.COD_USU = USU.COD_USU
+INNER JOIN TB_FUNCIONARIOS AS FUNC ON USU.COD_FUNC = FUNC.COD_FUNC
+INNER JOIN TB_PRODUTOS AS PROD ON VEND.COD_PROD = PROD.COD_PROD
+INNER JOIN TB_FORNECEDORES AS FORN ON PROD.COD_FORN = FORN.COD_FORN
+WHERE PROD.COD_PROD = 1;
+
+/*
+Mostrar:
+- usuário do funcionário
+- nome do funcionário
+- salário do funcionário
+- comissão de 17% em cima das vendas dos produtos que vieram do fornecedor Fazenda da Tijuca e Horta Verde Mar em que a compra passou de R$100,00 
+- salário + comissão
+*/
+
+SELECT USU.NOME AS 'USUÁRIO', FUNC.NOME AS 'FUNCIONARIO', FUNC.SALARIO AS 'SALARIO', 
+ROUND(VEND.QUANTIDADE * PROD.VALOR * 0.83, 2) AS 'COMISSÃO', 
+ROUND(SALARIO + VEND.QUANTIDADE * PROD.VALOR * 0.83, 2) AS 'SALARIO FINAL'
+FROM TB_VENDAS AS VEND
+INNER JOIN TB_USUARIOS AS USU ON VEND.COD_USU = USU.COD_USU
+INNER JOIN TB_FUNCIONARIOS AS FUNC ON USU.COD_FUNC = FUNC.COD_FUNC
+INNER JOIN TB_PRODUTOS AS PROD ON VEND.COD_PROD = PROD.COD_PROD
+INNER JOIN TB_FORNECEDORES AS FORN ON PROD.COD_FORN = FORN.COD_FORN
+WHERE FORN.COD_FORN IN (1, 2) AND VEND.QUANTIDADE * PROD.VALOR > 100;
