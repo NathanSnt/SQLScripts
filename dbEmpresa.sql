@@ -154,8 +154,8 @@ inner join tbProdutos as prod on vend.codProd = prod.codProd
 inner join tbClientes as cli on cli.codCli = vend.codCli
 inner join tbFornecedores as forn on prod.codForn = forn.codForn
 where vend.codProd = 3;
-
 */
+
 /*
 Qual o nome do funcionário que vendeu o produto morango e quantidade da venda
 e qual é o fornecedor desse produto.
